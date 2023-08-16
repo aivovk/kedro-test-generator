@@ -153,10 +153,16 @@ def test_pipeline(catalog):
     assert True
 """
         # write test files
-        test_dir = project_root / "src" / "tests" / "pipelines" / pipeline_name
+        test_dir = Path(
+            path.replace(
+                str(project_root / "src" / metadata.package_name),
+                str(project_root / "src" / "tests"),
+            )
+        )
         node_test_path = test_dir / "test_nodes.py"
         conftest_path = test_dir / "conftest.py"
         pipeline_test_path = test_dir / "test_pipeline.py"
+        init_test_path = test_dir / "__init__.py"
         if not os.path.exists(test_dir):
             os.makedirs(test_dir)
         if os.path.exists(node_test_path):
@@ -173,3 +179,5 @@ def test_pipeline(catalog):
                 f.write(fixtures_code)
             with open(pipeline_test_path, "w") as f:
                 f.write(pipeline_test_code)
+            with open(init_test_path, "w") as f:
+                pass
